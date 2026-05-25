@@ -28,22 +28,22 @@ const cvSummary = {
 
 const experience = [
   {
-    role: 'Ingeniero de Software',
+    role: 'Desarrollador Web',
     company: 'Brunell.io',
     period: '2025 - presente',
-    details: '.',
+    details: 'Desarrollé una plataforma de analítica de video end-to-end con IA, integrando Django para el backend de eventos, YOLO para detección.',
   },
   {
     role: 'Tesista',
     company: 'Media Master',
     period: '2025',
-    details: '.',
+    details: 'Desarrollo de un juego sobre alfabetización mediatica en con Django y React. La aplicación permite a los usuarios gestionar y jugar a juegos donde interactúan con noticias, clasificándolas como reales o falsas.',
   },
   {
-    role: 'Desarrollador',
+    role: 'Practica Cyberseguridad',
     company: 'Lippinet',
     period: '2024',
-    details: '.',
+    details: 'El uso de distintas herramientas de cyberseguridad para la proteccion de datos, y el estudio de las distintas competencias existentes.',
   },
 ];
 
