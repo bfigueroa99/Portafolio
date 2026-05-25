@@ -9,27 +9,27 @@ const cvSummary = {
   email: 'bfigueroag99@gmail.com',
   phone: '+56 9 5682 0650',
   summary:
-    'Ingeniero de software con experiencia en desarrollo full-stack, creación de aplicaciones web modernas y soluciones empresariales. Trabajo con React, TypeScript, Node.js, bases de datos SQL/NoSQL y despliegues en la nube.',
+    'Ingeniero de software con experiencia en desarrollo full-stack, creación de aplicaciones web modernas y soluciones empresariales.',
 };
 
 const experience = [
   {
     role: 'Ingeniero de Software',
     company: 'Brunell.io',
-    period: '2024 - presente',
-    details: 'Desarrollo de productos digitales para comercio electrónico y automatización de procesos internos en equipos ágiles, con foco en rendimiento y experiencia de usuario.',
+    period: '2025 - presente',
+    details: '.',
   },
   {
-    role: 'Desarrollador Full-stack',
+    role: 'Tesista',
     company: 'Media Master',
-    period: '2022 - 2023',
-    details: 'Implementación de plataformas web y soluciones de backend, integración de APIs externas y optimización de despliegues usando Docker y Git.',
+    period: '2025',
+    details: '.',
   },
   {
     role: 'Desarrollador',
     company: 'Lippinet',
-    period: '2021 - 2022',
-    details: 'Participación en proyectos de software empresarial, desarrollo de interfaces interactivas y colaboración en mejoras de arquitectura de software.',
+    period: '2024',
+    details: '.',
   },
 ];
 
@@ -48,7 +48,7 @@ const education = [
     title: 'Inglés Avanzado',
     institution: 'Instituto Chileno Británico',
     period: '2019 - 2024',
-  },
+  }
 ];
 
 const skills = [
@@ -306,10 +306,10 @@ function App() {
               />
             ))}
             {timelineItems.map((item, index) => {
-              const baseLeft = 5 + 90 * (index / (timelineItems.length - 1));
-              const left = ((baseLeft - 5 + timelineShift) % 90 + 90) % 90 + 5;
-              const xRatio = (left - 5) / 90;
-              const sinAtPoint = Math.sqrt(Math.max(0, 1 - Math.pow(1 - 2 * xRatio, 2)));
+              const baseRatio = (index + 0.5) / timelineItems.length;
+              const rawRatio = (baseRatio + timelineShift / 100) % 1;
+              const left = 5 + 90 * rawRatio;
+              const sinAtPoint = Math.sqrt(Math.max(0, 1 - Math.pow(1 - 2 * rawRatio, 2)));
               const top = 18 + 40 * (1 - sinAtPoint);
               return (
                 <div
