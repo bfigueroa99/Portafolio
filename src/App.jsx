@@ -2,6 +2,20 @@ import { useEffect, useState } from 'react';
 
 const githubUsername = 'bfigueroa99';
 
+const fallbackGithubUser = {
+  login: 'bfigueroa99',
+  name: 'Benjamin Figueroa Guzman',
+  bio: 'Perfil disponible en GitHub.',
+  avatar_url: `https://github.com/bfigueroa99.png?size=200`,
+  html_url: 'https://github.com/bfigueroa99',
+  public_repos: 0,
+  followers: 0,
+  following: 0,
+  created_at: new Date().toISOString(),
+  location: '',
+  blog: '',
+};
+
 const cvSummary = {
   name: 'Benjamin Figueroa Guzman',
   title: 'Ingeniero de Software / Desarrollador Full-stack',
@@ -132,19 +146,27 @@ function App() {
         ]);
 
         if (!userRes.ok) {
-          throw new Error(`No se pudo cargar el perfil de GitHub (${userRes.status})`);
-        }
-        if (!reposRes.ok) {
-          throw new Error(`No se pudieron cargar los repositorios (${reposRes.status})`);
+          const message = userRes.status === 403
+            ? 'GitHub API rate limit alcanzado. Se muestran datos básicos sin repositorios.'
+            : `No se pudo cargar el perfil de GitHub (${userRes.status})`;
+          throw new Error(message);
         }
 
         const userData = await userRes.json();
-        const repoData = await reposRes.json();
-
         setGithubUser(userData);
-        setGithubRepos(repoData);
+
+        if (reposRes.ok) {
+          const repoData = await reposRes.json();
+          setGithubRepos(repoData);
+        } else if (reposRes.status === 403) {
+          throw new Error('GitHub API rate limit alcanzado. No se cargaron repositorios.');
+        } else {
+          throw new Error(`No se pudieron cargar los repositorios (${reposRes.status})`);
+        }
       } catch (error) {
         setGithubError(error.message);
+        setGithubUser(fallbackGithubUser);
+        setGithubRepos([]);
       }
     }
 
@@ -353,10 +375,11 @@ function App() {
           <p>Una vista limpia y profesional de mi cuenta GitHub, con métricas clave y repositorios actualizados automáticamente.</p>
         </div>
 
-        {githubError ? (
-          <div className="github-error">Error cargando GitHub: {githubError}</div>
-        ) : githubUser ? (
+        {githubUser ? (
           <>
+            {githubError && (
+              <div className="github-error">{githubError}</div>
+            )}
             <div className="github-summary-grid reveal-on-scroll">
               <div className="github-profile-card reveal-on-scroll">
                 <div className="github-avatar" style={{ backgroundImage: `url(${githubUser.avatar_url})` }} />
