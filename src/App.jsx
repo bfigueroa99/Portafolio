@@ -5,44 +5,89 @@ const githubUsername = 'bfigueroa99';
 const cvSummary = {
   name: 'Benjamin Figueroa Guzman',
   title: 'Ingeniero de Software / Desarrollador Full-stack',
-  location: 'Chile',
-  email: 'benjamin.figueroa@example.com',
-  phone: '+56 9 1234 5678',
+  location: 'Santiago, Chile',
+  email: 'bfigueroag99@gmail.com',
+  phone: '+56 9 5682 0650',
   summary:
-    'Diseño y desarrollo de aplicaciones web modernas con foco en experiencia de usuario, rendimiento y código mantenible. Experiencia en React, Node.js, APIs REST, y proyectos de código abierto.',
+    'Ingeniero de software con experiencia en desarrollo full-stack, creación de aplicaciones web modernas y soluciones empresariales. Trabajo con React, TypeScript, Node.js, bases de datos SQL/NoSQL y despliegues en la nube.',
 };
 
 const experience = [
   {
-    role: 'Desarrollador Full-stack',
-    company: 'Proyectos independientes',
-    period: '2023 - Presente',
-    details: 'Implementación de aplicaciones web para clientes y portafolios con React, Vite y plataformas de despliegue modernas.',
+    role: 'Ingeniero de Software',
+    company: 'Brunell.io',
+    period: '2024 - presente',
+    details: 'Desarrollo de productos digitales para comercio electrónico y automatización de procesos internos en equipos ágiles, con foco en rendimiento y experiencia de usuario.',
   },
   {
-    role: 'Ingeniero de Software',
-    company: 'Soluciones Digitales',
-    period: '2021 - 2023',
-    details: 'Coordinación de equipos ágiles, desarrollo front-end y back-end, y mejoras de rendimiento en sistemas de gestión empresarial.',
+    role: 'Desarrollador Full-stack',
+    company: 'Media Master',
+    period: '2022 - 2023',
+    details: 'Implementación de plataformas web y soluciones de backend, integración de APIs externas y optimización de despliegues usando Docker y Git.',
+  },
+  {
+    role: 'Desarrollador',
+    company: 'Lippinet',
+    period: '2021 - 2022',
+    details: 'Participación en proyectos de software empresarial, desarrollo de interfaces interactivas y colaboración en mejoras de arquitectura de software.',
   },
 ];
 
 const education = [
   {
     title: 'Ingeniería en Computación',
-    institution: 'Universidad Técnica',
+    institution: 'Universidad de los Andes',
     period: '2017 - 2021',
+  },
+  {
+    title: 'Ingles Intermedio-Avanzado',
+    institution: 'Kaplan UK',
+    period: '2026',
+  },
+  {
+    title: 'Inglés Avanzado',
+    institution: 'Instituto Chileno Británico',
+    period: '2019 - 2024',
   },
 ];
 
-const skills = ['React', 'JavaScript', 'CSS Animations', 'Node.js', 'Git', 'APIs REST'];
+const skills = [
+  'C',
+  'C++',
+  'Python',
+  'Ruby on Rails',
+  'JavaScript',
+  'TypeScript',
+  'React',
+  'Node.js',
+  'PostgreSQL',
+  'Docker',
+  'Git',
+];
+
+const timelineItems = [
+  ...experience.map((item) => ({
+    title: item.role,
+    subtitle: item.company,
+    period: item.period,
+    details: item.details,
+    kind: 'experience',
+  })),
+  ...education.map((item) => ({
+    title: item.title,
+    subtitle: item.institution,
+    period: item.period,
+    details: 'Formación académica relevante.',
+    kind: 'education',
+  })),
+];
 
 const selectorItems = [
-  { label: 'Sobre mí', href: '#cv' },
-  { label: 'Experiencia', href: '#cv' },
-  { label: 'Habilidades', href: '#cv' },
+  { label: 'Sobre mí', href: '#profile' },
+  { label: 'Experiencia', href: '#experience' },
+  { label: 'Educación', href: '#experience' },
+  { label: 'Habilidades', href: '#skills' },
   { label: 'Proyectos', href: '#github' },
-  { label: 'Contacto', href: '#github' },
 ];
 
 const formatDate = (dateString) =>
@@ -56,6 +101,27 @@ function App() {
   const [githubUser, setGithubUser] = useState(null);
   const [githubRepos, setGithubRepos] = useState([]);
   const [githubError, setGithubError] = useState(null);
+  const [timelineShift, setTimelineShift] = useState(0);
+
+  useEffect(() => {
+    let frameId;
+    let lastTime;
+
+    const animate = (time) => {
+      if (lastTime !== undefined) {
+        const delta = time - lastTime;
+        setTimelineShift((current) => {
+          const next = current + delta * 0.004;
+          return next >= 100 ? next - 100 : next;
+        });
+      }
+      lastTime = time;
+      frameId = requestAnimationFrame(animate);
+    };
+
+    frameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
   useEffect(() => {
     async function fetchGithub() {
@@ -110,6 +176,17 @@ function App() {
     return () => observer.disconnect();
   }, [githubUser, githubRepos]);
 
+  const pathNodes = Array.from({ length: 48 }, (_, idx) => {
+    const xRatio = idx / 47;
+    const sinAtPoint = Math.sqrt(Math.max(0, 1 - Math.pow(1 - 2 * xRatio, 2)));
+    return {
+      left: 5 + 90 * xRatio,
+      top: 18 + 40 * (1 - sinAtPoint),
+      opacity: 0.2 + 0.45 * Math.sin(Math.PI * xRatio),
+      delay: idx * 0.04,
+    };
+  });
+
   return (
     <div className="app-shell">
       <div className="orbit-background" aria-hidden="true">
@@ -124,7 +201,7 @@ function App() {
           <h1>{cvSummary.name}</h1>
           <p>{cvSummary.summary}</p>
           <div className="hero-buttons reveal-on-scroll">
-            <a href="#cv" className="btn btn-primary">Ver mi CV</a>
+            <a href="#profile" className="btn btn-primary">Ver mi CV</a>
             <a href="#github" className="btn btn-secondary">Ver GitHub</a>
           </div>
           <div className="hero-stats">
@@ -162,7 +239,7 @@ function App() {
         <div className="section-header">
           <span>Índice</span>
           <h2>Selección rápida</h2>
-          <p>Un menú circular inspirado en la selección de armas de GTA.</p>
+          <p>Un menú circular.</p>
         </div>
 
         <div className="gta-wheel">
@@ -188,48 +265,85 @@ function App() {
         </div>
       </section>
 
-      <section id="cv" className="section cv-section">
+      <section id="profile" className="section profile-section reveal-on-scroll">
         <div className="section-header reveal-on-scroll">
-          <span>CV</span>
-          <h2>Mi trayectoria profesional</h2>
-          <p>Un resumen directo de mi perfil, experiencia, educación y capacidades técnicas.</p>
+          <span>Perfil</span>
+          <h2>Sobre mí</h2>
+          <p>Esta sección presenta mi perfil profesional y datos de contacto.</p>
         </div>
 
-        <div className="about-grid">
-          <article className="about-card pulse-card reveal-on-scroll">
-            <h3>Perfil profesional</h3>
-            <p>{cvSummary.summary}</p>
-            <p>
-              <strong>Correo:</strong> {cvSummary.email}
-              <br />
-              <strong>Teléfono:</strong> {cvSummary.phone}
-            </p>
-          </article>
-          <article className="about-card glow-card reveal-on-scroll">
-            <h3>Experiencia clave</h3>
-            {experience.map((item) => (
-              <div key={`${item.company}-${item.role}`} className="cv-item">
-                <strong>{item.role}</strong>
-                <span>{item.company} · {item.period}</span>
-                <p>{item.details}</p>
-              </div>
-            ))}
-          </article>
-          <article className="about-card float-card reveal-on-scroll">
-            <h3>Educación y habilidades</h3>
-            {education.map((item) => (
-              <div key={`${item.institution}-${item.title}`} className="cv-item">
-                <strong>{item.title}</strong>
-                <span>{item.institution} · {item.period}</span>
-              </div>
-            ))}
-            <div className="skills-bubble-grid">
-              {skills.map((skill) => (
-                <div key={skill} className="skill-bubble">{skill}</div>
-              ))}
-            </div>
-          </article>
+        <article className="about-card pulse-card reveal-on-scroll">
+          <h3>Perfil profesional</h3>
+          <p>{cvSummary.summary}</p>
+          <p>
+            <strong>Correo:</strong> {cvSummary.email}
+            <br />
+            <strong>Teléfono:</strong> {cvSummary.phone}
+          </p>
+        </article>
+      </section>
+
+      <section id="experience" className="section experience-section reveal-on-scroll">
+        <div className="section-header reveal-on-scroll">
+          <span>Experiencia</span>
+          <h2>Mi experiencia clave</h2>
+          <p>Trayectoria profesional en roles de ingeniería y desarrollo full-stack, junto con mi formación académica.</p>
         </div>
+
+        <article className="about-card glow-card reveal-on-scroll">
+          <div className="experience-timeline">
+            {pathNodes.map((node, idx) => (
+              <span
+                key={`path-node-${idx}`}
+                className="timeline-path-node"
+                aria-hidden="true"
+                style={{
+                  left: `${node.left}%`,
+                  top: `${node.top}%`,
+                  opacity: node.opacity,
+                  animationDelay: `${node.delay}s`,
+                }}
+              />
+            ))}
+            {timelineItems.map((item, index) => {
+              const baseLeft = 5 + 90 * (index / (timelineItems.length - 1));
+              const left = ((baseLeft - 5 + timelineShift) % 90 + 90) % 90 + 5;
+              const xRatio = (left - 5) / 90;
+              const sinAtPoint = Math.sqrt(Math.max(0, 1 - Math.pow(1 - 2 * xRatio, 2)));
+              const top = 18 + 40 * (1 - sinAtPoint);
+              return (
+                <div
+                  key={`${item.subtitle}-${item.title}`}
+                  className="timeline-point"
+                  style={{ left: `${left}%`, top: `${top}%` }}
+                >
+                  <span className={`timeline-marker ${item.kind === 'education' ? 'education-marker' : ''}`} />
+                  <div className={`timeline-card ${item.kind === 'education' ? 'timeline-card-education' : ''}`}>
+                    <strong>{item.title}</strong>
+                    <span>{item.subtitle} · {item.period}</span>
+                    <p>{item.details}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </article>
+      </section>
+
+      <section id="skills" className="section skills-section reveal-on-scroll">
+        <div className="section-header reveal-on-scroll">
+          <span>Habilidades</span>
+          <h2>Habilidades técnicas</h2>
+          <p>Tecnologías y herramientas con las que trabajo habitualmente.</p>
+        </div>
+
+        <article className="about-card reveal-on-scroll">
+          <div className="skills-bubble-grid">
+            {skills.map((skill) => (
+              <div key={skill} className="skill-bubble">{skill}</div>
+            ))}
+          </div>
+        </article>
       </section>
 
       <section id="github" className="section github-section">

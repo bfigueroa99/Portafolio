@@ -400,7 +400,7 @@ a {
 .portfolio-grid,
 .skills-bubble-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .about-grid {
@@ -408,7 +408,7 @@ a {
 }
 
 .about-card {
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 2rem;
   background: rgba(16, 21, 44, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1133,6 +1133,151 @@ a {
 
 .gta-wheel-item strong {
   line-height: 1.2;
+}
+
+.experience-timeline {
+  position: relative;
+  min-height: 420px;
+  padding: 2.5rem 1.2rem 1.5rem;
+  margin-top: 1.4rem;
+}
+
+.timeline-path-node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(111, 125, 255, 0.95) 0%, rgba(111, 125, 255, 0.3) 35%, transparent 85%);
+  box-shadow: 0 0 18px 6px rgba(111, 125, 255, 0.16), inset 0 0 8px rgba(111, 125, 255, 0.35);
+  pointer-events: none;
+  z-index: 0;
+  animation: pathGlow 2s infinite ease-in-out;
+}
+
+.timeline-point {
+  position: absolute;
+  width: min(200px, 14vw);
+  max-width: 220px;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.timeline-marker {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  box-shadow: 0 0 0 10px rgba(111, 125, 255, 0.18);
+  transform: translate(-50%, -50%);
+}
+
+.timeline-marker::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(111, 125, 255, 0.18) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  filter: blur(4px);
+  animation: markerPulse 2.4s infinite ease-in-out;
+}
+
+.timeline-card {
+  padding: 1.3rem 1.4rem;
+  border-radius: 1.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.16);
+  margin-top: 1.8rem;
+}
+
+.timeline-card-education {
+  background: rgba(68, 212, 255, 0.08);
+  border-color: rgba(68, 212, 255, 0.16);
+}
+
+.education-marker {
+  background: linear-gradient(135deg, rgba(68, 212, 255, 1), rgba(111, 125, 255, 1));
+  box-shadow: 0 0 0 10px rgba(68, 212, 255, 0.14);
+}
+
+.timeline-card strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.timeline-card span {
+  display: block;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.95rem;
+  margin-bottom: 0.7rem;
+}
+
+.timeline-card p {
+  margin: 0;
+  color: rgba(248, 248, 255, 0.82);
+  line-height: 1.75;
+}
+
+@keyframes pathGlow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
+  }
+}
+
+@keyframes markerPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-timeline {
+    min-height: 420px;
+  }
+
+  .timeline-point {
+    width: 100%;
+    left: 50% !important;
+    top: auto !important;
+    transform: translateX(-50%);
+  }
+
+  .timeline-arc {
+    left: 20px;
+    right: 20px;
+    top: 48px;
+    height: 0;
+    border-top: 2px solid rgba(111, 125, 255, 0.18);
+    border-radius: 0;
+  }
+
+  .timeline-marker {
+    margin: 0;
+  }
 }
 
 .floating-orbit {
