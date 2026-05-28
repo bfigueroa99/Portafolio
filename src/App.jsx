@@ -20,7 +20,7 @@ const cvSummary = {
   name: 'Benjamin Figueroa Guzman',
   title: 'Ingeniero de Software / Desarrollador Full-stack',
   location: 'Santiago, Chile',
-  email: 'bfigueroag99@gmail.com',
+  email: 'bfigueroa@miuandes.cl',
   phone: '+56 9 5682 0650',
   summary:
     'Ingeniero de software con experiencia en desarrollo full-stack, creación de aplicaciones web modernas y soluciones empresariales.',
