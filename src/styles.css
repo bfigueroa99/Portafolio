@@ -1255,28 +1255,40 @@ a {
     grid-template-columns: 1fr;
   }
 
+  /* La línea de tiempo animada (posiciones absolutas) pasa a ser
+     una lista vertical apilada y legible en pantallas medianas/móviles. */
   .experience-timeline {
-    min-height: 420px;
+    position: static;
+    min-height: 0;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .timeline-path-node {
+    display: none !important;
   }
 
   .timeline-point {
-    width: 100%;
-    left: 50% !important;
+    position: relative !important;
+    left: auto !important;
     top: auto !important;
-    transform: translateX(-50%);
-  }
-
-  .timeline-arc {
-    left: 20px;
-    right: 20px;
-    top: 48px;
-    height: 0;
-    border-top: 2px solid rgba(111, 125, 255, 0.18);
-    border-radius: 0;
+    width: 100% !important;
+    max-width: none;
+    transform: none !important;
+    padding-left: 1.75rem;
+    border-left: 2px solid rgba(111, 125, 255, 0.25);
   }
 
   .timeline-marker {
-    margin: 0;
+    top: 1.4rem;
+    left: 0;
+  }
+
+  .timeline-card {
+    margin-top: 0;
   }
 }
 
@@ -1503,4 +1515,155 @@ a {
 
 .reveal {
   animation: fadeIn 1.05s ease forwards;
+}
+
+/* ===========================================================
+   Responsive — tablets y móviles
+   =========================================================== */
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding-top: 1.5rem;
+  }
+
+  .section {
+    padding: 3.5rem clamp(1.1rem, 5vw, 2rem);
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .hero-section {
+    padding: 2.5rem 1.2rem 3rem;
+    gap: 2.5rem;
+    min-height: auto;
+  }
+
+  .hero-visual {
+    min-height: 320px;
+  }
+
+  .hero-copy p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .stat-card strong {
+    font-size: 1.6rem;
+  }
+
+  .about-card {
+    padding: 1.8rem;
+  }
+
+  .skills-bubble-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.9rem;
+  }
+
+  /* Rueda de índice -> lista vertical apilada en móvil */
+  .gta-wheel {
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .gta-wheel-ring,
+  .gta-wheel-center {
+    display: none;
+  }
+
+  .gta-wheel-item {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .gta-wheel-item a {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.9rem;
+    padding: 0.95rem 1.2rem;
+    border-radius: 1rem;
+    transform: none !important;
+  }
+
+  .gta-wheel-item a:hover,
+  .gta-wheel-item.active a {
+    transform: translateY(-2px) !important;
+  }
+
+  /* Tarjeta de perfil de GitHub: avatar arriba, contenido debajo */
+  .github-profile-card {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.6rem;
+  }
+
+  .github-avatar {
+    margin: 0 auto;
+  }
+
+  .github-profile-title {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-copy h1 {
+    font-size: 2.6rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .hero-buttons .btn {
+    flex: 1 1 100%;
+  }
+
+  .github-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .github-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+
+  .github-metrics div {
+    min-width: 0;
+    padding: 0.8rem 0.6rem;
+  }
+
+  .github-metrics strong {
+    font-size: 1.3rem;
+  }
+
+  .github-metrics span {
+    font-size: 0.8rem;
+  }
+
+  .repo-card {
+    padding: 1.4rem;
+  }
 }
